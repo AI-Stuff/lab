@@ -31,11 +31,11 @@ jobs:
         run: |
           echo "Running python_module_test.py2"
           bazel --bazelrc=.precommit.bazelrc build --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //python/tests:python_module_test.py2
-          LD_DEBUG=libs TEST_TMPDIR=/tmp bazel-bin/python/tests/python_module_test.py2 -v
+          LD_DEBUG=libs TEST_TMPDIR=/tmp bazel-out/k8-py2-opt/bin/python/tests/python_module_test.py2 -v
 
           echo "Running python_module_test.py3"
           bazel --bazelrc=.precommit.bazelrc build --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //python/tests:python_module_test.py3
-          LD_DEBUG=libs TEST_TMPDIR=/tmp bazel-bin/python/tests/python_module_test.py3 -v
+          LD_DEBUG=libs TEST_TMPDIR=/tmp bazel-out/k8-py3-opt/bin/python/tests/python_module_test.py3 -v
           
           #bazel --bazelrc=.precommit.bazelrc test  --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //... |& tee onerun.log
           #grep onerun.log -e '^\s*/home.*python_module_test.*test\.log' | xargs echo "Log files: "
