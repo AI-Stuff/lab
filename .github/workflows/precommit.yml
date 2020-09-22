@@ -29,7 +29,8 @@ jobs:
       - name: run-tests
         timeout-minutes: 45
         run: |
-          bazel --bazelrc=.precommit.bazelrc test  --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //... |& tee onerun.log
+          bazel --bazelrc=.precommit.bazelrc test  --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //python/tests:all |& tee onerun.log
+          #bazel --bazelrc=.precommit.bazelrc test  --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //... |& tee onerun.log
           grep onerun.log -e '^\s*/home.*python_module_test.*test\.log' | xargs echo "Log files: "
           echo -e "Printing:\n****"
           grep onerun.log -e '^\s*/home.*python_module_test.*test\.log' | xargs cat
