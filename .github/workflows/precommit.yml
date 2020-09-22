@@ -27,10 +27,13 @@ jobs:
         run: |
           bazel --bazelrc=.precommit.bazelrc build --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //...
       - name: run-tests
+        timeout-minutes: 45
         run: |
           bazel --bazelrc=.precommit.bazelrc test  --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //... |& tee onerun.log
           grep onerun.log -e '^\s*/home.*python_module_test.*test\.log' | xargs echo "Log files: "
+          echo -e "Printing:\n****"
           grep onerun.log -e '^\s*/home.*python_module_test.*test\.log' | xargs cat
+          echo -e "\n****\nPrinting done."
       - name: run-agent
         run: |
           bazel --bazelrc=.precommit.bazelrc run   --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare --define headless=osmesa //:python_random_agent
