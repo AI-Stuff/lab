@@ -29,7 +29,8 @@ jobs:
       - name: run-tests
         timeout-minutes: 45
         run: |
-          bazel --bazelrc=.precommit.bazelrc build --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //python/tests:python_module_test.py2 //python/tests:python_module_test.py3
+          bazel --bazelrc=.precommit.bazelrc build --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //python/tests:python_module_test.py2
+          bazel --bazelrc=.precommit.bazelrc build --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //python/tests:python_module_test.py3
           echo "Running python_module_test.py2"
           LD_DEBUG=libs TEST_TMPDIR=/tmp bazel-bin/python/tests/python_module_test.py2 -v
           echo "Running python_module_test.py3"
