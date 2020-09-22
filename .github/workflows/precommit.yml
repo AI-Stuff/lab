@@ -29,12 +29,17 @@ jobs:
       - name: run-tests
         timeout-minutes: 45
         run: |
-          bazel --bazelrc=.precommit.bazelrc test  --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //python/tests:python_module_test.py2 //python/tests:python_module_test.py2 --test_env=LD_DEBUG=libs   |& tee onerun.log
+          bazel --bazelrc=.precommit.bazelrc build --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //python/tests:python_module_test.py2 //python/tests:python_module_test.py3
+          echo "Running python_module_test.py2"
+          LD_DEBUG=libs TEST_TMPDIR=/tmp bazel-bin/python/tests/python_module_test.py2 -v
+          echo "Running python_module_test.py3"
+          LD_DEBUG=libs TEST_TMPDIR=/tmp bazel-bin/python/tests/python_module_test.py3 -v
+          
           #bazel --bazelrc=.precommit.bazelrc test  --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //... |& tee onerun.log
-          grep onerun.log -e '^\s*/home.*python_module_test.*test\.log' | xargs echo "Log files: "
-          echo -e "Printing:\n****"
-          grep onerun.log -e '^\s*/home.*python_module_test.*test\.log' | xargs cat
-          echo -e "\n****\nPrinting done."
+          #grep onerun.log -e '^\s*/home.*python_module_test.*test\.log' | xargs echo "Log files: "
+          #echo -e "Printing:\n****"
+          #grep onerun.log -e '^\s*/home.*python_module_test.*test\.log' | xargs cat
+          #echo -e "\n****\nPrinting done."
       - name: run-agent
         run: |
           bazel --bazelrc=.precommit.bazelrc run   --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare --define headless=osmesa //:python_random_agent
