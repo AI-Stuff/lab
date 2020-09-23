@@ -29,7 +29,8 @@ jobs:
       - name: run-tests
         timeout-minutes: 45
         run: |
-          bazel --bazelrc=.precommit.bazelrc test  --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //python/tests:all --test_env=LD_DEBUG=libs --test_output=all
+          bazel --bazelrc=.precommit.bazelrc test  --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //python/tests:all --test_output=errors
+          bazel --bazelrc=.precommit.bazelrc test  --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //... --test_output=errors
 
           #bazel --bazelrc=.precommit.bazelrc test  --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //python/tests:python_module_test.py2 --test_env=LD_DEBUG=libs --test_output=all
           #bazel --bazelrc=.precommit.bazelrc test  --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //python/tests:python_module_test.py3 --test_env=LD_DEBUG=libs --test_output=all
